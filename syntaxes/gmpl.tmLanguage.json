@@ -1,0 +1,146 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "GNU MathProg Language",
+	"scopeName": "source.gmpl",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"match": "\\b(set|setof|param|var)\\b",
+			"name": "keyword.other.gmpl"
+		},
+		{
+			"match": "\\b(&&|and|by|sum|prod|exists|cross|diff|div|in|Infini|inter|less|mod|not|dimen|or|\\|\\||symdiff|union|within|OUT|IN)\\b",
+			"name": "keyword.operator.gmpl"
+		},
+		{
+			"match": "\\b(data|end|display|for|forall|else|if|then|solve|maximize|minimize|table|check|subj(?:ect)?\\s+to)\\b",
+			"name": "keyword.control.gmpl"
+		},
+		{
+			"match": "\\s*(s\\.t\\.)\\s+",
+			"name": "keyword.control.gmpl",
+			"comment": "separate definition as . matches \\b"
+		},
+		{
+			"match": "\\b(binary|integer|symbolic)\\b",
+			"name": "support.type.gmpl"
+		},
+		{
+			"match": "\\b(printf|abs|ceil|floor|exp|log|log10|max|min|sqrt|sin|cos|atan|atan2|round|trunc|Irand224|Uniform0|Uniform|Normal01|Normal|card|length|substr|str2time|time2str|gmtime)\\b",
+			"name": "support.function.gmpl"
+		},
+		{
+			"match": "\\b(true|false|TRUE|FALSE|xBASE|i?ODBC|MySQL|CSV)\\b",
+			"name": "constant.language.gmpl"
+		},
+		{
+			"match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
+			"name": "constant.numeric.gmpl"
+		},
+		{
+			"comment": "set CONSTANT idiom",
+			"match": "\\b[A-Z][A-Z0-9_]+\\b",
+			"name": "constant.character.gmpl"
+		},
+		{
+			"comment": "variable idiom",
+			"match": "\\b[A-Z][A-Za-z0-9_]+\\b",
+			"name": "variable.other.gmpl"
+		},
+		{
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.gmpl"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.gmpl"
+				}
+			},
+			"name": "string.quoted.double.gmpl",
+			"patterns": [
+				{
+					"include": "#string_escaped_char"
+				},
+				{
+					"include": "#string_placeholder"
+				}
+			]
+		},
+		{
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.gmpl"
+				}
+			},
+			"end": "'",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.gmpl"
+				}
+			},
+			"name": "string.quoted.single.gmpl",
+			"patterns": [
+				{
+					"include": "#string_escaped_char"
+				}
+			]
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"begin": "/\\*",
+					"end": "\\*/",
+					"name": "comment.block.gmpl"
+				},
+				{
+					"match": "\\*/.*\\n",
+					"name": "invalid.illegal.stray-comment-end.gmpl"
+				},
+				{
+					"begin": "#",
+					"end": "$\\n?",
+					"name": "comment.line.number-sign.gmpl"
+				},
+				{
+					"begin": "//",
+					"end": "$\\n?",
+					"name": "comment.line.double-slash.gmpl"
+				}
+			]
+		},
+		"string_escaped_char": {
+			"patterns": [
+				{
+					"match": "\\\\(\\\\|[abefnprtv'\"?]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})",
+					"name": "constant.character.escape.gmpl"
+				},
+				{
+					"match": "\\\\.",
+					"name": "invalid.illegal.unknown-escape.gmpl"
+				}
+			]
+		},
+		"string_placeholder": {
+			"patterns": [
+				{
+					"match": "(?x)%\n    \t\t\t\t\t\t(\\d+\\$)?                             # field (argument #)\n    \t\t\t\t\t\t[#0\\- +']*                           # flags\n    \t\t\t\t\t\t[,;:_]?                              # separator character (AltiVec)\n    \t\t\t\t\t\t((-?\\d+)|\\*(-?\\d+\\$)?)?              # minimum field width\n    \t\t\t\t\t\t(\\.((-?\\d+)|\\*(-?\\d+\\$)?)?)?         # precision\n    \t\t\t\t\t\t(hh|h|ll|l|j|t|z|q|L|vh|vl|v|hv|hl)? # length modifier\n    \t\t\t\t\t\t[diouxXDOUeEfFgGaACcSspn%]           # conversion type\n    \t\t\t\t\t",
+					"name": "constant.other.placeholder.gmpl"
+				},
+				{
+					"match": "%",
+					"name": "invalid.illegal.placeholder.gmpl"
+				}
+			]
+		}
+	},
+	"uuid": "1d90942b-6776-498d-9d0e-311525879872"
+}

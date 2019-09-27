@@ -1,0 +1,36 @@
+{
+	"name": "gmpl",
+	"displayName": "GMPL",
+	"description": "",
+	"version": "1.0.0",
+	"publisher": "steffenk1337",
+	"engines": {
+		"vscode": "^1.38.0"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "gmpl",
+				"aliases": [
+					"GNU MathProg",
+					"gmpl"
+				],
+				"extensions": [
+					".gmpl",
+					".mod"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "gmpl",
+				"scopeName": "source.gmpl",
+				"path": "./syntaxes/gmpl.tmLanguage.json"
+			}
+		]
+	}
+}
